@@ -10,8 +10,11 @@ ScrollView{
         policy: ScrollBar.AlwaysOff
     }
 
+
+
     // properties
     property string textValue : ""
+
     TextArea {
         id: textField
         width: 400
@@ -39,6 +42,21 @@ ScrollView{
             //var newHeight = Math.min(Math.max(contentHeight, 40), 120);
             textField.height = contentHeight;
             textValue = text
+        }
+        Keys.onReturnPressed: {
+            if (event.modifiers & Qt.ShiftModifier) {
+                console.log("Shift + Enter pressed");
+                // Handle Shift + Enter
+            } else {
+                console.log("Enter pressed");
+                // Handle Enter without Shift
+                event.accepted = true;
+                var messageText = view.textValue.trim();
+                if (messageText !== "") {
+                    sendMessage("StrancKralı", messageText);
+                    view.textValue = "";
+                }
+            }
         }
     }
 
